@@ -1,0 +1,23 @@
+{
+  "name": "immutable-config",
+  "version": "0.1.0",
+  "description": "Simple immutable config library",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/javascriptismagic/immutable-config.git"
+  },
+  "keywords": [
+    "config",
+    "cson",
+    "json",
+    "argv",
+    "yargs",
+    "configuration"
+  ],
+  "author": "unicorn.coffee <javascriptismagic@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/javascriptismagic/immutable-config/issues"
+  },
+  "homepage": "https://github.com/javascriptismagic/immutable-config#readme"
+}
