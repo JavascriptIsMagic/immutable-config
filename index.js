@@ -2,7 +2,7 @@ var Immutable = require('seamless-immutable')
 var unflatten = require('flat').unflatten
 var argv = require('yargs').argv
 
-var ImmutableConfig = {
+var Config = module.exports = {
   config: {},
   env: process.env,
   unflattenedEnv: unflatten(process.env),
@@ -10,32 +10,32 @@ var ImmutableConfig = {
   unflattenedArgv: unflatten(argv)
 }
 
-if (ImmutableConfig.argv.config != null) {
+if (Config.argv.config != null) {
   try {
-    ImmutableConfig.argvConfig = require(ImmutableConfig.argv.config)
+    Config.argvConfig = require(Config.argv.config)
   } catch (error) {
-    console.warn('Config file from commandline --config ' + ImmutableConfig.argv.config + ' could not be loaded.')
+    console.warn('Config file from commandline --config ' + Config.argv.config + ' could not be loaded.')
     throw error
   }
 }
 
-if (ImmutableConfig.env.config != null) {
+if (Config.env.config != null) {
   try {
-    ImmutableConfig.envConfig = require(ImmutableConfig.env.config)
+    Config.envConfig = require(Config.env.config)
   } catch (error) {
-    console.warn('Config file from environment veriable CONFIG=' + ImmutableConfig.argv.config + ' could not be loaded.')
+    console.warn('Config file from environment veriable CONFIG=' + Config.argv.config + ' could not be loaded.')
     throw error
   }
 }
 
-ImmutableConfig.empty = Immutable.from({})
+Config.empty = Immutable.from({})
 
-ImmutableConfig.config = ImmutableConfig.empty.merge(
-  ImmutableConfig.env,
-  ImmutableConfig.unflattenedEnv,
-  ImmutableConfig.argvConfig || ImmutableConfig.envConfig || {},
-  ImmutableConfig.argv,
-  ImmutableConfig.unflattenedArgv
-)
+Config.config = Config.empty.merge([
+  Config.env,
+  Config.unflattenedEnv,
+  Config.argvConfig || Config.envConfig || {},
+  Config.argv,
+  Config.unflattenedArgv
+], {deep: true})
 
-module.exports = Immutable.from(ImmutableConfig)
+module.exports = Immutable.from(Config)

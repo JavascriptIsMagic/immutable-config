@@ -10,14 +10,18 @@ Unflattening is done by [Flat](https://www.npmjs.com/package/flat)'s `unflatten`
 Explicitly define your ./config.js file:
 --
 ```js
-var ImmutableConfig = require('immutable-config')
-module.exports = ImmutableConfig.empty.merge(
-  ImmutableConfig.env,
-  ImmutableConfig.unflattenedEnv,
-  ImmutableConfig.argvConfig || ImmutableConfig.envConfig || {},
-  ImmutableConfig.argv,
-  ImmutableConfig.unflattenedArgv
-)
+var Config = require('immutable-config')
+var defaults = {
+
+}
+Config.empty.merge([
+  defaults,
+  Config.env,
+  Config.unflattenedEnv,
+  Config.argvConfig || Config.envConfig || {},
+  Config.argv,
+  Config.unflattenedArgv
+], {deep: true})
 ```
 Or use the default merge (shown in the above example)
 --
